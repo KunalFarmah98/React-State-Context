@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { HeaderButton, HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { TouchableOpacity } from 'react-native';
 import CreateScreen from '../screens/CreateScreen';
+import EditScreen from '../screens/EditScreen';
 
 const IndexStack = createStackNavigator();
 
@@ -24,7 +25,7 @@ const getTitle = (route, screen) => {
 }
 const IndexStackScreen = () => {
     return (
-        <IndexStack.Navigator initialRouteName = 'Index'>
+        <IndexStack.Navigator initialRouteName='Index'>
             <IndexStack.Screen
                 name="Index"
                 component={IndexScreen}
@@ -33,7 +34,7 @@ const IndexStackScreen = () => {
                     headerShown: true,
                     headerRight: () => (
                         <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-                            <Ionicons name="add" size={30} style = {{marginRight: 20}} />
+                            <Ionicons name="add" size={30} style={{ marginRight: 20 }} />
                         </TouchableOpacity>
                     )
                 })}
@@ -41,15 +42,27 @@ const IndexStackScreen = () => {
             <IndexStack.Screen
                 name="Show"
                 component={ShowScreen}
-                options={({ route }) => ({
+                options={({ route , navigation}) => ({
                     headerTitle: getTitle(route, "Show"),
-                    headerShown: true
+                    headerShown: true,
+                    headerRight: () => (
+                        <TouchableOpacity onPress={() => navigation.navigate('Edit', {id: route.params.id, name: route.params.name})}>
+                            <Ionicons name="create" size={30} style={{ marginRight: 20 }} />
+                        </TouchableOpacity>
+                    )
                 })} />
             <IndexStack.Screen
                 name="Create"
                 component={CreateScreen}
                 options={({ route }) => ({
                     headerTitle: "Create A post",
+                    headerShown: true
+                })} />
+            <IndexStack.Screen
+                name="Edit"
+                component={EditScreen}
+                options={({ route }) => ({
+                    headerTitle: `Editting ${getTitle(route, "Blog")}`,
                     headerShown: true
                 })} />
         </IndexStack.Navigator>

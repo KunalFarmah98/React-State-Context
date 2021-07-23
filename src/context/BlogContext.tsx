@@ -4,28 +4,35 @@ import createDataContext from './createDataContext';
 const reducer = (state, action) => {
   switch (action.type) {
     case 'add_blogpost':
+      // create a new array with the newly added post in it
       return [...state, { title: action.payload.title, body: action.payload.body, id: state.length + 1 }];
     case 'delete_blogpost':
-      return state.filter((blogPost)=> blogPost.id!==action.payload);
+      // filter out the given id and return all others
+      return state.filter((blogPost) => blogPost.id !== action.payload);
+    case 'edit_blogpost':
+      return state.map((post)=>{
+          // if id is found, return the new post, else return the old ones
+          return post.id===action.payload.id ? action.payload : post;
+      });
     default: return state;
   }
 };
 
 const addBlogPost = (dispatch) => {
-  return (title, body) => { 
-    dispatch({ type: 'add_blogpost', payload: {title,body} }); 
+  return (title, body) => {
+    dispatch({ type: 'add_blogpost', payload: { title, body } });
   }
 }
 
 const editBlogPost = (dispatch) => {
-  return () => { 
-    dispatch({ type: 'add_blogpost' }); 
+  return (id, title, body) => {
+    dispatch({ type: 'edit_blogpost', payload: { id, title, body } });
   }
 }
 
 const deleteBlogPost = (dispatch) => {
-  return id => { 
-    dispatch({ type: 'delete_blogpost', payload: id }); 
+  return id => {
+    dispatch({ type: 'delete_blogpost', payload: id });
   }
 }
 
@@ -36,12 +43,12 @@ export const { Context, Provider } = createDataContext(
   [
     {
       title: 'Post 1',
-      body: 'asasas',
+      body: 'Body 1',
       id: 1
     },
     {
       title: 'Post 2',
-      body: 'asasadasdfsafa',
+      body: 'Body 2',
       id: 2
     }
   ]);

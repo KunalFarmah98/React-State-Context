@@ -10,7 +10,7 @@ const IndexScreen = () => {
     return (
         <View>
             <FlatList
-                keyExtractor={blogPost => blogPost.id}
+                keyExtractor={blogPost => blogPost.id+blogPost.body}
                 data={state}
                 renderItem={({ item }) => {
                     return <Blog data={item} del = {()=>deleteBlogPost(item.id)} />

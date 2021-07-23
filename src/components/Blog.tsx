@@ -4,16 +4,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from "@react-navigation/native";
 
 
-const Blog = ({data, del}) => {
+const Blog = ({ data, del }) => {
 
     const navigation = useNavigation();
-    return(
-        <View style = {styles.row}>
-            <Text style = {styles.title} onPress = {()=>{navigation.navigate('Show', {id: data.id, name: data.title})}}>{data.title}{"\n\n"}{data.body}</Text>
-            <TouchableOpacity onPress = {del}>
-            <Icon name = 'trash' size = {25} style = {styles.icon}/>
-            </TouchableOpacity>
-        </View>
+    return (
+        <TouchableOpacity onPress={() => { navigation.navigate('Show', { id: data.id, name: data.title }) }}>
+            <View style={styles.row}>
+                <Text style={styles.title} onPress={() => { navigation.navigate('Show', { id: data.id, name: data.title }) }}>{data.title}{"\n\n"}{data.body}</Text>
+                <TouchableOpacity onPress={del}>
+                    <Icon name='trash' size={25} style={styles.icon} />
+                </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
     );
 }
 
@@ -28,21 +30,21 @@ const styles = StyleSheet.create({
         margin: 15,
         alignItems: 'center'
     },
-    title:{
+    title: {
         fontSize: 18,
         fontWeight: '500',
-        marginHorizontal:10
+        marginHorizontal: 10
     },
-    body:{
+    body: {
         fontSize: 18,
         fontWeight: '500',
         marginTop: 20,
-        marginHorizontal:10,
+        marginHorizontal: 10,
         position: 'absolute',
         alignSelf: 'flex-end',
         alignContent: 'flex-end'
     },
-    icon:{
+    icon: {
         marginEnd: 20
     }
 })
